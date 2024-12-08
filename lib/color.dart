@@ -3,42 +3,7 @@ part of 'super_extensions.dart';
 extension ColorExt on Color {
   Color get invertColor {
     final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithThreshold {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithBlackAndWhite {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithBlackAndWhiteThreshold {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithWhiteAndBlack {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithWhiteAndBlackThreshold {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithThresholdBlackAndWhite {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
-  }
-
-  Color get invertColorWithThresholdWhiteAndBlack {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? Colors.black : Colors.white;
+    return hsl.lightness > 0.5 ? darken : lighten;
   }
 
   bool get isDark {
