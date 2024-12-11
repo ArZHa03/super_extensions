@@ -6,6 +6,8 @@ extension ColorExt on Color {
     return hsl.lightness > 0.5 ? darken : lighten;
   }
 
+  Color get responsive => isDark ? lighten : darken;
+
   bool get isDark {
     final luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
     return luminance < 0.5;
@@ -23,29 +25,11 @@ extension ColorExt on Color {
 
   Color withOpacity(double opacity) => Color.fromRGBO(red, green, blue, opacity);
 
-  Color get withOpacityLowest => withAlpha(0x1A);
-  Color get withOpacityLow => withAlpha(0x4D);
-  Color get withOpacityHigh => withAlpha(0xB3);
-  Color get withOpacityMedium => withAlpha(0x80);
-  Color get withOpacityFull => withAlpha(0xFF);
-
-  Color get withOpacityLowestBlack => Colors.black.withOpacity(0.1);
-  Color get withOpacityLowestWhite => Colors.white.withOpacity(0.1);
-
-  Color get withOpacityLowBlack => Colors.black.withOpacity(0.3);
-  Color get withOpacityLowWhite => Colors.white.withOpacity(0.3);
-
-  Color get withOpacityLowestBlackOrWhite => isDark ? withOpacityLowestWhite : withOpacityLowestBlack;
-
-  Color get withOpacityMediumBlack => Colors.black.withOpacity(0.5);
-  Color get withOpacityMediumWhite => Colors.white.withOpacity(0.5);
-
-  Color get withOpacityMediumBlackOrWhite => isDark ? withOpacityMediumWhite : withOpacityMediumBlack;
-
-  Color get withOpacityHighBlack => Colors.black.withOpacity(0.7);
-  Color get withOpacityHighWhite => Colors.white.withOpacity(0.7);
-
-  Color get withOpacityHighBlackOrWhite => isDark ? withOpacityHighWhite : withOpacityHighBlack;
+  Color get opacityLowest => withAlpha(0x1A);
+  Color get opacityLow => withAlpha(0x4D);
+  Color get opacityHigh => withAlpha(0xB3);
+  Color get opacityMedium => withAlpha(0x80);
+  Color get opacityFull => withAlpha(0xFF);
 
   String get toHex {
     final buffer = StringBuffer();
