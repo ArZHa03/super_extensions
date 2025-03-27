@@ -1,4 +1,4 @@
-part of 'super_extensions.dart';
+ part of 'super_extensions.dart';
 
 extension IntExt on int {
   Duration get seconds => Duration(seconds: this);

@@ -1,29 +1,16 @@
 part of 'super_extensions.dart';
 
 extension ColorExt on Color {
-  Color get invertColor {
-    final hsl = HSLColor.fromColor(this);
-    return hsl.lightness > 0.5 ? darken : lighten;
-  }
-
+  Color get invertColor => HSLColor.fromColor(this).lightness > 0.5 ? darken : lighten;
   Color get responsive => isDark ? lighten : darken;
 
-  bool get isDark {
-    final luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
-    return luminance < 0.5;
-  }
+  bool get isDark => (0.299 * r + 0.587 * g + 0.114 * b) < 0.5;
+  bool get isLight => (0.299 * r + 0.587 * g + 0.114 * b) >= 0.5;
 
-  bool get isLight {
-    final luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
-    return luminance >= 0.5;
-  }
+  Color get darken => HSLColor.fromColor(this).withLightness((HSLColor.fromColor(this).lightness - 0.1).clamp(0.0, 1.0)).toColor();
+  Color get lighten => HSLColor.fromColor(this).withLightness((HSLColor.fromColor(this).lightness + 0.1).clamp(0.0, 1.0)).toColor();
 
-  Color get darken =>
-      HSLColor.fromColor(this).withLightness((HSLColor.fromColor(this).lightness - 0.1).clamp(0.0, 1.0)).toColor();
-  Color get lighten =>
-      HSLColor.fromColor(this).withLightness((HSLColor.fromColor(this).lightness + 0.1).clamp(0.0, 1.0)).toColor();
-
-  Color withOpacity(double opacity) => Color.fromRGBO(red, green, blue, opacity);
+  Color withOpacity(double opacity) => Color.fromRGBO((255 * r).toInt(), (255 * g).toInt(), (255 * b).toInt(), opacity);
 
   Color get opacityLowest => withAlpha(0x1A);
   Color get opacityLow => withAlpha(0x4D);
@@ -31,12 +18,16 @@ extension ColorExt on Color {
   Color get opacityMedium => withAlpha(0x80);
   Color get opacityFull => withAlpha(0xFF);
 
-  String get toHex {
+  static Color fromHex(String hexString) {
     final buffer = StringBuffer();
-    buffer.write('#');
-    buffer.write(red.toRadixString(16).padLeft(2, '0'));
-    buffer.write(green.toRadixString(16).padLeft(2, '0'));
-    buffer.write(blue.toRadixString(16).padLeft(2, '0'));
-    return buffer.toString();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
   }
+
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${(255 * a).toInt().toRadixString(16).padLeft(2, '0')}'
+      '${(255 * r).toInt().toRadixString(16).padLeft(2, '0')}'
+      '${(255 * g).toInt().toRadixString(16).padLeft(2, '0')}'
+      '${(255 * b).toInt().toRadixString(16).padLeft(2, '0')}';
 }
